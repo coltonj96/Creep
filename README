@@ -1,0 +1,10 @@
+Punish griefers or mess with your friends!
+
+Spawn certain numbers of mobs and other entities at a certain player's position, or where you are looking.
+
+Commands and Permissions
+<required>, [optional]
+/creep [player] [#] - spawn a creeper[s] at the player's position, or where you are looking
+/enderman [player] [#] - spawn an enderman [or more than one] at the player's position, or where you are looking
+/skeleton [player] [#] - spawn a skeleton [or more than one] at the player's position, or where you are looking
+/spider [player] [#] - spawn a skeleton [or more than one] at the player's position, or where you are looking
