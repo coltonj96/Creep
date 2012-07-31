@@ -1,8 +1,8 @@
-name: Smite
-main: me.sciguymjm.Smite.Smite
+name: Creep
+main: me.sciguymjm.Creep.Creep
 version: 1.0
 description: >
              Spawns mobs at a player's location.
 commands:
-  smite:
-    description: Lightning.
+  creep:
+    description: Spawn a creeper.

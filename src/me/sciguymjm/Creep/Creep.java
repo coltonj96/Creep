@@ -2,13 +2,14 @@ package me.sciguymjm.Creep;
 
 import java.util.logging.Logger;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -34,13 +35,38 @@ public class Creep extends JavaPlugin{
 			if(args.length == 0){
 				Block targetblock = player.getTargetBlock(null, 50);
 				Location location = targetblock.getLocation();
-				world.spawnEntity(location, EntityType.CREEPER);
-			} else if (args.length == 2) {
+				world.spawn(location, Creeper.class);
+				
+			} else if (args.length == 1) {
 				if(player.getServer().getPlayer(args[0]) != null) {
-					Player targetplayer = player.getServer().getPlayer(args[0]);
+					/*Player targetplayer = player.getServer().getPlayer(args[0]);
 					Location location = targetplayer.getLocation();
-					world.spawnEntity(location, EntityType.CREEPER);
-					player.sendMessage(ChatColor.GRAY + "Creeping " + targetplayer.getDisplayName());
+					world.spawn(location, Creeper.class);*/
+					Player targetPlayer = Bukkit.getServer().getPlayer(args[0]);
+
+		            Location playerLocation = targetPlayer.getLocation();
+		            double y = playerLocation.getBlockY();
+		            double x = playerLocation.getBlockX();
+		            double z = playerLocation.getBlockZ();
+
+		            World currentTargetWorld = targetPlayer.getWorld();
+
+		            Location Creeper1 = new Location(currentTargetWorld, x + 2.0D, y, z);
+		            Location Creeper2 = new Location(currentTargetWorld, x - 2.0D, y, z);
+		            Location Creeper3 = new Location(currentTargetWorld, x, y, z + 2.0D);
+		            Location Creeper4 = new Location(currentTargetWorld, x, y, z - 2.0D);
+
+		            Creeper s1 = (Creeper)targetPlayer.getWorld().spawn(Creeper1, Creeper.class);
+		            Creeper s2 = (Creeper)targetPlayer.getWorld().spawn(Creeper2, Creeper.class);
+		            Creeper s3 = (Creeper)targetPlayer.getWorld().spawn(Creeper3, Creeper.class);
+		            Creeper s4 = (Creeper)targetPlayer.getWorld().spawn(Creeper4, Creeper.class);
+
+		            s1.setTarget(targetPlayer);
+		            s2.setTarget(targetPlayer);
+		            s3.setTarget(targetPlayer);
+		            s4.setTarget(targetPlayer);
+
+		            sender.sendMessage(ChatColor.RED + "You spawned Creepers near " + args[0] + "!");
 				} else {
 					player.sendMessage(ChatColor.RED + "Error: The player is offline.");
 				}
