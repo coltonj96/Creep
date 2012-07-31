@@ -2,6 +2,14 @@ package me.sciguymjm.Creep;
 
 import java.util.logging.Logger;
 
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -18,5 +26,29 @@ public class Creep extends JavaPlugin{
 	public void onEnable() {
 		PluginDescriptionFile pdfFile = this.getDescription();
 		this.logger.info(pdfFile.getName() + " version " + pdfFile.getVersion() + " is now enabled.");
+	}
+	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		Player player = (Player) sender;
+		World world = player.getWorld();
+		if(commandLabel.equalsIgnoreCase("creep")) {
+			if(args.length == 0){
+				Block targetblock = player.getTargetBlock(null, 50);
+				Location location = targetblock.getLocation();
+				world.spawnEntity(location, EntityType.CREEPER);
+			} else if (args.length == 2) {
+				if(player.getServer().getPlayer(args[0]) != null) {
+					Player targetplayer = player.getServer().getPlayer(args[0]);
+					Location location = targetplayer.getLocation();
+					world.spawnEntity(location, EntityType.CREEPER);
+					player.sendMessage(ChatColor.GRAY + "Creeping " + targetplayer.getDisplayName());
+				} else {
+					player.sendMessage(ChatColor.RED + "Error: The player is offline.");
+				}
+			} else if (args.length > 1){
+				player.sendMessage(ChatColor.RED + "Error: Too many arguments!");
+			}
+			
+		}
+		return false;
 	}
 }

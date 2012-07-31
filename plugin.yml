@@ -1,0 +1,8 @@
+name: Smite
+main: me.sciguymjm.Smite.Smite
+version: 1.0
+description: >
+             Spawns mobs at a player's location.
+commands:
+  smite:
+    description: Lightning.
