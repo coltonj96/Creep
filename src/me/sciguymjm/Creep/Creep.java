@@ -129,7 +129,7 @@ public class Creep extends JavaPlugin{
 			}
 		}
 		}
-		if(player.hasPermission("creep.creep"))
+		if(player.hasPermission("creep.skeleton"))
 		{
 		if(commandLabel.equalsIgnoreCase("skeleton")) {
 			/*if(args.length == 0){
