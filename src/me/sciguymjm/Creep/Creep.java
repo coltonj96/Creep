@@ -1,5 +1,6 @@
 package me.sciguymjm.Creep;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
@@ -10,12 +11,14 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Enderman;
+import org.bukkit.entity.PigZombie;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Spider;
 import org.bukkit.entity.Zombie;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.mcstats.MetricsLite;
 
 
 
@@ -30,6 +33,12 @@ public class Creep extends JavaPlugin{
 	public void onEnable() {
 		PluginDescriptionFile pdfFile = this.getDescription();
 		this.logger.info(pdfFile.getName() + " version " + pdfFile.getVersion() + " is now enabled.");
+		try {
+		    MetricsLite metrics = new MetricsLite(this);
+		    metrics.start();
+		} catch (IOException e) {
+		    // Failed to submit the stats :-(
+		}
 	}
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		Player player = (Player) sender;
@@ -262,7 +271,55 @@ public class Creep extends JavaPlugin{
 		            s3.setTarget(targetPlayer);
 		            s4.setTarget(targetPlayer);
 
-		            sender.sendMessage(ChatColor.GRAY + "You spawned endermans around " + args[0] + "!");
+		            sender.sendMessage(ChatColor.GRAY + "You spawned endermen around " + args[0] + "!");
+				} else {
+					player.sendMessage(ChatColor.RED + "Error: The player is offline.");
+				}
+			} else if (args.length > 1){
+				player.sendMessage(ChatColor.RED + "Error: Too many arguments!");
+			} else if (args.length < 1){
+				player.sendMessage(ChatColor.RED + "Error: Not enough arguments!");
+			}
+		}
+		}
+		if(player.hasPermission("creep.pigzombie") || player.isOp() || player.hasPermission("creep.*"))
+		{
+		if(commandLabel.equalsIgnoreCase("pigzombie")) {
+			/*if(args.length == 0){
+				Block targetblock = player.getTargetBlock(null, 50);
+				Location location = targetblock.getLocation();
+				world.spawn(location, PigZombie.class);
+				} else */
+			if (args.length == 1) {
+				if(player.getServer().getPlayer(args[0]) != null) {
+					/*Player targetplayer = player.getServer().getPlayer(args[0]);
+					Location location = targetplayer.getLocation();
+					world.spawn(location, PigZombie.class);*/
+					Player targetPlayer = Bukkit.getServer().getPlayer(args[0]);
+
+		            Location playerLocation = targetPlayer.getLocation();
+		            double y = playerLocation.getBlockY();
+		            double x = playerLocation.getBlockX();
+		            double z = playerLocation.getBlockZ();
+
+		            World currentTargetWorld = targetPlayer.getWorld();
+
+		            Location PigZombie1 = new Location(currentTargetWorld, x + 2.0D, y, z);
+		            Location PigZombie2 = new Location(currentTargetWorld, x - 2.0D, y, z);
+		            Location PigZombie3 = new Location(currentTargetWorld, x, y, z + 2.0D);
+		            Location PigZombie4 = new Location(currentTargetWorld, x, y, z - 2.0D);
+
+		            PigZombie s1 = (PigZombie)targetPlayer.getWorld().spawn(PigZombie1, PigZombie.class);
+		            PigZombie s2 = (PigZombie)targetPlayer.getWorld().spawn(PigZombie2, PigZombie.class);
+		            PigZombie s3 = (PigZombie)targetPlayer.getWorld().spawn(PigZombie3, PigZombie.class);
+		            PigZombie s4 = (PigZombie)targetPlayer.getWorld().spawn(PigZombie4, PigZombie.class);
+
+		            s1.setTarget(targetPlayer);
+		            s2.setTarget(targetPlayer);
+		            s3.setTarget(targetPlayer);
+		            s4.setTarget(targetPlayer);
+
+		            sender.sendMessage(ChatColor.GRAY + "You spawned Zombie Pigmen around " + args[0] + "!");
 				} else {
 					player.sendMessage(ChatColor.RED + "Error: The player is offline.");
 				}
