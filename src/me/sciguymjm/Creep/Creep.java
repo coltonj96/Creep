@@ -39,7 +39,7 @@ public class Creep extends JavaPlugin{
 				Location location = targetblock.getLocation();
 				world.spawn(location, Creeper.class);
 				} else */
-			if(player.hasPermission("creep.creep") || player.isOp())
+			if(player.hasPermission("creep.creep"))
 			{
 			if (args.length == 1) {
 				if(player.getServer().getPlayer(args[0]) != null) {
@@ -81,7 +81,7 @@ public class Creep extends JavaPlugin{
 			}
 		}
 		}
-		if(player.hasPermission("creep.zombie") || player.isOp())
+		if(player.hasPermission("creep.zombie"))
 		{
 		if(commandLabel.equalsIgnoreCase("Zombie")) {
 			/*if(args.length == 0){
@@ -129,7 +129,7 @@ public class Creep extends JavaPlugin{
 			}
 		}
 		}
-		if(player.hasPermission("creep.creep") || player.isOp())
+		if(player.hasPermission("creep.creep"))
 		{
 		if(commandLabel.equalsIgnoreCase("skeleton")) {
 			/*if(args.length == 0){
