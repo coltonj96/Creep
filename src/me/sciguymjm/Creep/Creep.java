@@ -9,8 +9,10 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Creeper;
+import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.Spider;
 import org.bukkit.entity.Zombie;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -31,15 +33,13 @@ public class Creep extends JavaPlugin{
 	}
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		Player player = (Player) sender;
-		if(player.isOp() || player.hasPermission("creep.*")){
-			
 		if(commandLabel.equalsIgnoreCase("creep")) {
 			/*if(args.length == 0){
 				Block targetblock = player.getTargetBlock(null, 50);
 				Location location = targetblock.getLocation();
 				world.spawn(location, Creeper.class);
 				} else */
-			if(player.hasPermission("creep.creep"))
+			if(player.hasPermission("creep.creep") || player.isOp() || player.hasPermission("creep.*"))
 			{
 			if (args.length == 1) {
 				if(player.getServer().getPlayer(args[0]) != null) {
@@ -81,7 +81,7 @@ public class Creep extends JavaPlugin{
 			}
 		}
 		}
-		if(player.hasPermission("creep.zombie"))
+		if(player.hasPermission("creep.zombie") || player.isOp() || player.hasPermission("creep.*"))
 		{
 		if(commandLabel.equalsIgnoreCase("Zombie")) {
 			/*if(args.length == 0){
@@ -129,7 +129,7 @@ public class Creep extends JavaPlugin{
 			}
 		}
 		}
-		if(player.hasPermission("creep.skeleton"))
+		if(player.hasPermission("creep.skeleton") || player.isOp() || player.hasPermission("creep.*"))
 		{
 		if(commandLabel.equalsIgnoreCase("skeleton")) {
 			/*if(args.length == 0){
@@ -176,6 +176,101 @@ public class Creep extends JavaPlugin{
 				player.sendMessage(ChatColor.RED + "Error: Not enough arguments!");
 			}
 		}
+		}
+		if(player.hasPermission("creep.spider") || player.isOp() || player.hasPermission("creep.*"))
+		{
+		if(commandLabel.equalsIgnoreCase("spider")) {
+			/*if(args.length == 0){
+				Block targetblock = player.getTargetBlock(null, 50);
+				Location location = targetblock.getLocation();
+				world.spawn(location, Spider.class);
+				} else */
+			if (args.length == 1) {
+				if(player.getServer().getPlayer(args[0]) != null) {
+					/*Player targetplayer = player.getServer().getPlayer(args[0]);
+					Location location = targetplayer.getLocation();
+					world.spawn(location, Spider.class);*/
+					Player targetPlayer = Bukkit.getServer().getPlayer(args[0]);
+
+		            Location playerLocation = targetPlayer.getLocation();
+		            double y = playerLocation.getBlockY();
+		            double x = playerLocation.getBlockX();
+		            double z = playerLocation.getBlockZ();
+
+		            World currentTargetWorld = targetPlayer.getWorld();
+
+		            Location Spider1 = new Location(currentTargetWorld, x + 2.0D, y, z);
+		            Location Spider2 = new Location(currentTargetWorld, x - 2.0D, y, z);
+		            Location Spider3 = new Location(currentTargetWorld, x, y, z + 2.0D);
+		            Location Spider4 = new Location(currentTargetWorld, x, y, z - 2.0D);
+
+		            Spider s1 = (Spider)targetPlayer.getWorld().spawn(Spider1, Spider.class);
+		            Spider s2 = (Spider)targetPlayer.getWorld().spawn(Spider2, Spider.class);
+		            Spider s3 = (Spider)targetPlayer.getWorld().spawn(Spider3, Spider.class);
+		            Spider s4 = (Spider)targetPlayer.getWorld().spawn(Spider4, Spider.class);
+
+		            s1.setTarget(targetPlayer);
+		            s2.setTarget(targetPlayer);
+		            s3.setTarget(targetPlayer);
+		            s4.setTarget(targetPlayer);
+
+		            sender.sendMessage(ChatColor.GRAY + "You spawned Spiders around " + args[0] + "!");
+				} else {
+					player.sendMessage(ChatColor.RED + "Error: The player is offline.");
+				}
+			} else if (args.length > 1){
+				player.sendMessage(ChatColor.RED + "Error: Too many arguments!");
+			} else if (args.length < 1){
+				player.sendMessage(ChatColor.RED + "Error: Not enough arguments!");
+			}
+		}
+		}
+		if(player.hasPermission("creep.enderman") || player.isOp() || player.hasPermission("creep.*"))
+		{
+		if(commandLabel.equalsIgnoreCase("enderman")) {
+			/*if(args.length == 0){
+				Block targetblock = player.getTargetBlock(null, 50);
+				Location location = targetblock.getLocation();
+				world.spawn(location, Enderman.class);
+				} else */
+			if (args.length == 1) {
+				if(player.getServer().getPlayer(args[0]) != null) {
+					/*Player targetplayer = player.getServer().getPlayer(args[0]);
+					Location location = targetplayer.getLocation();
+					world.spawn(location, Enderman.class);*/
+					Player targetPlayer = Bukkit.getServer().getPlayer(args[0]);
+
+		            Location playerLocation = targetPlayer.getLocation();
+		            double y = playerLocation.getBlockY();
+		            double x = playerLocation.getBlockX();
+		            double z = playerLocation.getBlockZ();
+
+		            World currentTargetWorld = targetPlayer.getWorld();
+
+		            Location Enderman1 = new Location(currentTargetWorld, x + 2.0D, y, z);
+		            Location Enderman2 = new Location(currentTargetWorld, x - 2.0D, y, z);
+		            Location Enderman3 = new Location(currentTargetWorld, x, y, z + 2.0D);
+		            Location Enderman4 = new Location(currentTargetWorld, x, y, z - 2.0D);
+
+		            Enderman s1 = (Enderman)targetPlayer.getWorld().spawn(Enderman1, Enderman.class);
+		            Enderman s2 = (Enderman)targetPlayer.getWorld().spawn(Enderman2, Enderman.class);
+		            Enderman s3 = (Enderman)targetPlayer.getWorld().spawn(Enderman3, Enderman.class);
+		            Enderman s4 = (Enderman)targetPlayer.getWorld().spawn(Enderman4, Enderman.class);
+
+		            s1.setTarget(targetPlayer);
+		            s2.setTarget(targetPlayer);
+		            s3.setTarget(targetPlayer);
+		            s4.setTarget(targetPlayer);
+
+		            sender.sendMessage(ChatColor.GRAY + "You spawned endermans around " + args[0] + "!");
+				} else {
+					player.sendMessage(ChatColor.RED + "Error: The player is offline.");
+				}
+			} else if (args.length > 1){
+				player.sendMessage(ChatColor.RED + "Error: Too many arguments!");
+			} else if (args.length < 1){
+				player.sendMessage(ChatColor.RED + "Error: Not enough arguments!");
+			}
 		}
 		}
 		return false;
